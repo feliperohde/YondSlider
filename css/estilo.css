@@ -1,0 +1,137 @@
+ 	 /*
+Autor: Felipe Rohde
+Empresa:Felipe Rohde inc
+VersÃ£o: 1.0
+Nome: beyond question
+*/
+
+@font-face {
+     font-family: ball;
+     src: url('ball.ttf');
+}
+
+*{outline:none;margin:0;padding:0;text-decoration:none;list-style:none;font-style:normal;font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif;}
+
+/* Variaveis globais*/
+.cntr{width: 900px; margin: auto;}
+.boxS{-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;}
+.BrdrAll{-moz-border-radius: 4px;-webkit-border-radius: 4px; border-radius: 4px;} /* border radius all*/
+.shadowInset{ -moz-box-shadow:inset 0 0 8px #333;  -webkit-box-shadow:inset 0 0 8px #333;  box-shadow:inset 0 0 8px #333; }
+.shadow{ -moz-box-shadow: 0 0 8px #333;  -webkit-box-shadow: 0 0 8px #333;  box-shadow: 0 0 8px #333; }
+
+
+	
+* img, img{border:none}
+body{background: #fff}
+
+
+code {padding: 10px; background: #fff; border: solid 3px #8996A8; overflow: scroll}
+
+/* sliders control */
+
+.sliders-control{height: 33px; width: 242px; margin:-4px 0 0 255px; float: left;}
+	.sliders-control .prev-control{height: 100%;width:42px; display: inline-table; float:left; background: url('../img/prev_sample.png') no-repeat;}
+	.sliders-control .next-control{height: 100%;width:42px;display: inline-table; float:left; background: url('../img/next_sample.png') no-repeat; }
+	
+	.sliders-control span{height: 33px; background: url('../img/samples_inner.png') repeat-x; display: inline-table; float: left; padding: 5px 10px 0 10px; font-weight: bold; color: #fff; text-shadow: 0 1px 0 #000}
+	
+	
+	.next-control a, .prev-control a{font-size: 13px; font-weight: bold; padding: 6px;  float: right; color: #fff; text-shadow: 0 1px 0 #000, 0 0 20px #000}
+	.next-control a img, .prev-control a img{ margin: 3px 0 0 5px}
+	.prev-control a{float: left;margin-left: 3px}
+	.next-control a{margin-right: 9px}
+	
+	.next-control:hover{background: url('../img/next_sample.png') no-repeat; background-position:0 -33px}
+	.prev-control:hover{background: url('../img/prev_sample.png') no-repeat;background-position:0 -33px}
+	
+	.sliders-control #folow{color: #fff; font-weight: bolder; margin: 10px 0 0 70px; text-shadow: 0 1px 0 #000, 0 0 10px #000, 0 0 20px #000}
+	#folow:hover{color: #287368; text-shadow: 0 1px 0 #000, 0 0 20px #0099FF}
+
+
+
+/*controls - play/pause/stop */
+
+.controls{margin: 0 0 0 5px; margin:auto; height: 35px; background: url('../img/layout/back_controls.png') repeat-x; display: table}
+	.controls ul{display: table;padding: 6px 0 0 0;}
+	.controls li{cursor: pointer; width:65px; height:30px;  text-align:center;  display:inline-table; margin: 0 5px 0 5px;  color: #fff; font-weight: bold; font-size: 12px; text-shadow: 0 1px 0 #000}
+	.controls li:hover{color: #E28964; padding-top:1px; text-shadow: 0 -1px 0 #000}
+	
+
+
+/* Blocos de código */
+
+.howTo{width: 900px; margin: 30px auto 10px auto}
+.howTo .howTitle{padding: 5px; background: #ccc; font-size: 13px; font-weight: bold; text-shadow: 0 1px 0 #fff; color: #333333}
+.howTo .how{}
+
+/* TOPO FIXO*/
+
+
+
+
+
+.fixedTop{height: 82px; margin: 0 0 30px 0; background: url('../img/layout/back_yondSlider_top.png') repeat-x; border-bottom:solid 1px #BBBBBB}
+	#logo{margin: 10px 0 0 0;  float: left}
+	
+	nav{float: right;  margin:50px 0 0 5px;}
+        nav ul li{display: block; float: left;}
+            nav ul li a{text-shadow:0px 1px 1px #fff; height: 20px; display: block;  padding: 0 10px 0 10px; font-size: 13px; font-weight: 500;  color: #000; }
+                nav ul li a:hover, .menuActive{color: #3E87E3;}
+                .menuActive{background: #999999; color: #fff; text-shadow: 0 1px 0 #000}
+                 .menuActive:hover{color: #fff; cursor: default}
+
+/* share options -*/
+
+
+
+#share_bar{height: 40px; width: 100%; padding:5px; border-bottom: dashed 1px #111; border-top:dashed 1px #111; margin: 30px 0 0 0}
+
+#share_bar .childShare{float: left; border-right: dashed 1px #111; height: 40px; padding: 0 5px 0 5px}
+#share_bar .childShare:last-child{border-right: none}
+
+			.childShare #word{padding: 7px 0 0 0; float: left; color: #005599; margin: 0 5px 0 5px}
+
+		  .childShare ul li{float: left; display: table; margin: 0 5px 0 5px; font-size: 14px; color: #005599}
+		  .childShare ul{padding-top: 8px}
+		  
+			.donate{margin: 3px 0 0 25px; width: 314px; float:right; height: 35px; background: url('../img/layout/Button_donate.png') repeat-x; display: table}
+			.donate ul.whoDonate{display: table;padding: 6px 0px 0 0px; float: right}
+			.donate ul.whoDonate li{cursor: pointer;  height:30px;  text-align:center; margin: 0 10px 0 10px;  color: #fff; font-weight: bold; font-size: 12px; text-shadow: 0 1px 0 #000}
+			.donate ul.whoDonate li:hover{color: #DAD085; padding-top:1px; text-shadow: none}
+	
+
+/*who fixed*/
+.who{margin: 0; width: 100%; padding: 20px 10px 10px 10px}
+.who .box{width: 260px; display: inline-table; margin: 25px; vertical-align: top; }
+.who .box:first-child{margin-left: 0}
+.who .box:last-child{margin-right: 0}
+
+.who .title p{font-family:ball; font-size: 2.7em; text-shadow: 0 1px 0 #fff, 0 0 60px #ccc; color: #202020}
+.who .content{margin: 10px 0 0 0}
+.who .content p, .who .content li{font-family: Tahoma;font-size: 13px; text-align: justify; line-height: 20px; color: #333; padding-left: 10px}
+.who .content li{margin: 5px; list-style: disc}
+
+.downloadButton{padding: 10px; height:20px; border: solid 1px #606060;background: #96CBFE url('../img/layout/back_menu.png') repeat-x bottom;}
+.downloadButton a{float: left; width: 230px; text-align: center; text-shadow: 0 1px 0 #fff, 0 0 10px #000;color:#000; font-weight: bolder}
+
+/*contato */
+
+.contatoForm{width: 890px; display: inline-table; margin: 0px 0 50px 0}
+
+	.boxContato{width: 500px; display: table-cell;}
+	
+		.boxContato p {width: 340px; font-size: 12px; text-align:justify; text-indent: 0px; margin: 0 0 0 0px; color: #666}
+	
+	.boxContato form input, .boxContato form textarea, .boxContato form select{margin: 5px; padding:2px}
+		.boxContato form input:focus, .boxContato form textarea:focus{border:solid 1px #003949; -moz-box-shadow:inset 0 0 8px #333;  -webkit-box-shadow:inset 0 0 8px #333;  box-shadow:inset 0 0 8px #333;}
+		
+		.boxContato form input, .boxContato form select{width: 200px; border: solid 1px #333}
+		.boxContato form input[type="file"]{width: 285px;}
+		.boxContato form select{ width: 260px}
+		
+		.boxContato form input[type="submit"]{font-weight:bold; text-shadow:0px 1px 0 #000;background: url('../img/layout/backMenuFixedTopHover2.png') repeat-x; color: #fff;-moz-box-shadow: 0 0 0px #333;  -webkit-box-shadow: 0 0 0px #333;  box-shadow: 0 0 0px #333;-moz-border-radius: 4px;-webkit-border-radius: 4px; border-radius: 4px;}
+		  	.boxContato form input[type="submit"]:hover{color:#89BDFF; cursor: pointer;}
+		.boxContato form textarea{max-height: 200px; max-width: 500px; height: 400px; border: solid 1px #333}
+
+.callbackContato{padding: 3px; width: 500px; background: #daf1ff; border: solid 1px #000; font-size:13px; margin: auto} 
+	

@@ -1,0 +1,13 @@
+
+/* --------titulos na vertical com css --*/
+
+	.verticalTitle{
+
+    top: -1px; 
+    left:-1px; 
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	}
+	.verticalTitle:hover{
+		color:#606060;
+
+	}
