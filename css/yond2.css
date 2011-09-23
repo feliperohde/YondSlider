@@ -82,7 +82,7 @@
 			
 /*------------slide 4 - começe agora -------*/
 #comece{background: url('../img/back_clean2.png');}
- .nonColum .header{ padding: 5px; background: #111; height: 60px; width: 140px; margin: auto 70%; opacity: 0.8}
+ .nonColum .header{ padding: 5px; background: #fff; height: 215px; width: 140px; margin: auto 70%; opacity: 0.8}
 	  	 	                 .header img{ margin:10px 10px auto; width: 110px;}
 	  	 	                 .header:hover{cursor: pointer; opacity: 1}
 .nonColum .download{padding: 5px; background: #111; height: 60px; width: 140px; position:absolute; margin-left:70%; bottom:0px; opacity: 0.8}
