@@ -320,7 +320,7 @@
 				
 					$(this).mousewheel(function(objEvent, intDelta) {
 						//vel = Math.abs(intDelta);
-						alert($(this));
+						//alert($(this));
 						//$('#shadow').html(vel);
 						$(this).trigger(o.event);
 						// se eu rolar o scroll em cima de um slide, este slide vai ser aberto e setado como ativo
@@ -545,8 +545,9 @@
 					// /alert(1);
 				   // alert($(oSelf).find('.YcaptionGroup').find('.Ycaption'));
 					$('.Ycaption')
+						.stop()
 						.delay(o.durationInner + 120)
-						.css({'opacity': 0})
+						.css({'opacity': 0})						
 						.animate({marginTop:+10, opacity: 1},{ duration:200})
 						.animate({marginTop:0, opacity: 1},{ duration:200});
 				}
