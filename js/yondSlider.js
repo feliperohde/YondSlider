@@ -8,6 +8,8 @@
  up: 0.9 suporte ao jQuery Mouse Whell
  up: 1.0 todos os bugs (no scroll, botoes, etc) corrigidos
 
+ previsão para 1.1: touch suport e aprimorar os controler do teclado.
+
  OBS: alguns Eases do jQuery Easing podem não funcionar adequadamente no evento MOUSEOVER pelo fato de que o posicionamento dos elementos é dinâmico, exemplo: easeInElastic e afins
 
  -------------------------------
@@ -284,7 +286,7 @@
 		});
 		//fim out slider
 
-	   $(o.innerSlider).each(function() {
+	   $(o.innerSlider).each(function(){
 
 			// se tiver paginaçao, iniciamos suas opçoes
 			if($(this).find('.pager') && o.pagerOver)// fadeIn/fadeOut na paginaçao
@@ -313,11 +315,12 @@
 			} else// se o slide nao tiver slides internos entao continua fazendo scroll dos slides pais... (verificar laço de slides internos para configuração do wheel para eles)
 			{
 
-				if(o.scroll) {
-
+				if(o.scroll){
+						
+				
 					$(this).mousewheel(function(objEvent, intDelta) {
 						//vel = Math.abs(intDelta);
-
+						alert($(this));
 						//$('#shadow').html(vel);
 						$(this).trigger(o.event);
 						// se eu rolar o scroll em cima de um slide, este slide vai ser aberto e setado como ativo
@@ -535,17 +538,20 @@
 				setTimer();
 			};
 
-			this.move = function(iDirection, bPublic) {
-
-				if($(o.innerSlider).find('.Ycaption') && o.caption) {
-					//alert(1);
-					$('.Ycaption').css('display', 'none');
-					$(o.innerSlider).find('.Ycaption').delay(o.durationInner + 120).fadeIn();
-					// not a
-				} else {
-					$('.Ycaption').css('display', 'none');
-					// not a
+			this.move = function(iDirection, bPublic)
+			{
+				if($(o.iListMarker, this).find('.Ycaption') && o.caption)
+				{
+					// /alert(1);
+				   // alert($(oSelf).find('.YcaptionGroup').find('.Ycaption'));
+					$('.Ycaption')
+						.delay(o.durationInner + 120)
+						.css({'opacity': 0})
+						.animate({marginTop:+10, opacity: 1},{ duration:200})
+						.animate({marginTop:0, opacity: 1},{ duration:200});
 				}
+				
+			
 				iCurrent = bPublic ? iDirection : iCurrent += iDirection;
 
 				if(iCurrent > -1 && iCurrent < iSteps) {
