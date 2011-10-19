@@ -86,9 +86,35 @@
 			$(o.innerSlider, o.outSlider).data('ynd').move(iNum - 1, true);
 		};
 
+		$.fn.YOmove = function(iNum) {
+			$(o.innerSlider).eq(iNum).trigger(o.event).addClass('active');
+		};
+		
+		$.fn.YOnext = function(){
+			
+			var total= $(o.innerSlider).size();
+			var index= $('.active').index();
+						
+			if(index==(total-1))
+				$('.theyond').eq(0).trigger(o.event);
+			else
+			$('.theyond.active').next().trigger(o.event);
+		};
+		
+		$.fn.YOprev = function(){
+			var total= $(o.innerSlider).size();
+			var index= $('.active').index();
+				
+						
+			if(index==0)
+			$('.theyond').eq(total-1).trigger(o.event);
+			else
+			$('.theyond.active').prev().trigger(o.event);
+		};
+		
 		$(o.outSlider).find('.pagenum').click(function() {
 
-			var ehActive = $(this).parent().parent().parent();
+			var ehActive = $(this).parents('theyond').parent().parent();
 			// coisa feia
 
 			if(!$(ehActive).hasClass('active')) {
@@ -142,7 +168,25 @@
 					}
 				}
 			}
-
+			
+			//alert(beyond.size());
+			
+			var iFrequency = 5000; // expressed in miliseconds 
+			var myInterval = 0; 
+			//var allYonds=beyond.size();
+			// STARTS and Resets the loop if any 
+		//	function startLoop() { 
+			//    if(myInterval > 0) clearInterval(myInterval);  // stop 
+			//    myInterval = setInterval( "doSomething()", iFrequency );  // run 
+			//} 
+			function dick() 
+			{ 
+				
+				alert(1);
+				//beyond.trigger(o.event);
+			   // allYonds++;
+			}
+			setTimeout("dick()",1000);
 			// laço para todos os elementos da classe .beyond
 			beyond.each(function(i) {
 
@@ -411,8 +455,9 @@
 									return false;
 
 								} else {
-									//alert($(oViewport).parent().parent().attr('class'));
-									$(this).parent().parent().next().trigger(o.event);
+									//alert($(this).parent().parent().attr('class'));
+									
+									//$(this).parent().parent().next().trigger(o.event);
 								}
 
 							}
@@ -425,7 +470,7 @@
 									oSelf.move(-1);
 									return false;
 								} else {
-									$(this).parent().parent().prev().trigger(o.event);
+									//$(this).parent().parent().prev().trigger(o.event);
 								}
 
 							}
@@ -447,7 +492,8 @@
 									oSelf.move(-1);
 									return false;
 								} else {
-									$(this).parent().parent().prev().trigger(o.event);
+									//alert($(this).parent().parent().attr('class'));
+									$(this).parents('.theyond').prev().trigger(o.event);
 								}
 
 							} else if(intDelta < 0) {
@@ -456,7 +502,7 @@
 									oSelf.move(1);
 									return false;
 								} else {
-									$(this).parent().parent().next().trigger(o.event);
+									$(this).parents('.theyond').next().trigger(o.event);
 								}
 
 							}
@@ -514,7 +560,7 @@
 			function setTimer() {
 				if((o.rand && !bPause && $(oViewport).hasClass('Yrand')))// preciso dar uma melhorada nesses testes
 				{
-					$(oSelf).eq(0).css('display', 'none');
+					//$(oSelf).eq(0).css('display', 'none');
 					clearTimeout(oTimer);
 					oTimer = setTimeout(function() {
 						iCurrent = iCurrent + 1 == iSteps ? -1 : iCurrent;
