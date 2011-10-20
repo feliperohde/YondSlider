@@ -168,26 +168,7 @@
 					}
 				}
 			}
-			
-			//alert(beyond.size());
-			
-			var iFrequency = 5000; // expressed in miliseconds 
-			var myInterval = 0; 
-			//var allYonds=beyond.size();
-			// STARTS and Resets the loop if any 
-		//	function startLoop() { 
-			//    if(myInterval > 0) clearInterval(myInterval);  // stop 
-			//    myInterval = setInterval( "doSomething()", iFrequency );  // run 
-			//} 
-			function dick() 
-			{ 
-				
-				alert(1);
-				//beyond.trigger(o.event);
-			   // allYonds++;
-			}
-			setTimeout("dick()",1000);
-			// laço para todos os elementos da classe .beyond
+
 			beyond.each(function(i) {
 
 				//arrayRands = (o.randThis).split(',');
