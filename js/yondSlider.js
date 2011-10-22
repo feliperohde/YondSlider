@@ -29,31 +29,32 @@
 (function($) {
 	$.fn.YondSlider = function(options) {
 		var defaults = {
-			event : 'click', 				// jQuery EVENTS: Em que evento a ação será iniciada; (mouseover,click,doubleclick,mouseout...)
-			easing : 'easeInOutCirc',       // jQuery Easing Plug-in: Define o efeito de easing para os sliders pais
-			easingInner : 'easeOutExpo',    // jQuery Easing Plug-in: Define o easing para sliders internos
-			hubVertical : false,            // TRUE/FALSE: Em fase de testes; É possíve escolher se o slider pai vai funcionar na vertical ou na horizontal (são necessárias mudanças de css para tudo ocorrer bem)
-			hubVerticalInner : false,       // TRUE/FALSE: Em fase de testes, eixo dos slides filhos, define se a transição interna ocorrerá na vertical ou na horizontal
-			scroll : true,                  // TRUE/FALSE: Se true Habilita o scroll do mouse nos slides (jQuery mouse whell necessário)
-			keyboard : false,               // TRUE/FALSE: Em fase de testes (nao recomendavel usar): habilita controles pelo teclado.
-			pagerOver : true,               // TRUE/FALSE: Se true faz com que a paginação suma no Mouse Out
-			caption : true,                 // TRUE/FALSE: Se true faz com que caption seja mostrado (necessita HTML)
-			pin : true,                     // TRUE/FALSE: Se true podemos deixar o ultimo slide da ação aberto :)
-			defaultYond : null,             // NÚMERO (int): Se for diferente de null o valor será o slide aberto inicialmente da esquerda para a direita começando com 1
-			defaultYondInner : 1,           // NÚMERO (int): Igual ao item acima, no entanto este é valido apenas para os filhos.
-			spacing : 1,                    // NÚMERO (int): Espaço entre os slides pais (em px)
-			duration : 400,                 // NÚMERO (int): Tempo de transição para slides pais
-			durationInner : 800,            // NÚMERO (int): Tempo de transição para slides filhos
-			pager : true,                   // TRUE/FALSE: Se true, mostra a paginação dos slides filhos (verificar HTML)
-			animation : true,               // TRUE/FALSE: Se true, haverá efeitos de transição nos slides filhos
-			rand : '[all]',                 // TRUE/FALSE/array[]/string: true/false/[1,2,5...]/[all]/all: os slides filhos selecionados com a regra serão rotacionados automaticamente e aleatoriamente
-			randtime : 4000,      //4seg    // NÚMERO (int): Se rand tiver uma régra diferente de false/null/undefined, este é o tempo de entre as randomizações
-			display : 1,                    // NÚMERO (int): Quantos slides (filhos) serão passados por ação (tem influência sobre a paginação)
-			controls : true,                // TRUE/FALSE: Se true, será exibido controles de proximo e antreios nos sliders filhos
-			innerSlider : '.slider',        // ELEM (string): Elemento/class dos sliders filhos (verifique HTML e siga o padrão)
-			outSlider : this,               // ELEM (string): Elemento/class dos sliders pais (verifique HTML e siga o padrão)
-			iListMarker : 'dt',             // ELEM (string): Elemento/TAG, os sliders internos são identificados por esta tag :)
-			callback : null,                // resposta de ação para sliders pais
+			event : 'click', // jQuery EVENTS: Em que evento a ação será iniciada; (mouseover,click,doubleclick,mouseout...)
+			easing : 'easeInOutCirc', // jQuery Easing Plug-in: Define o efeito de easing para os sliders pais
+			easingInner : 'easeOutExpo', // jQuery Easing Plug-in: Define o easing para sliders internos
+			hubVertical : false, // TRUE/FALSE: Em fase de testes; É possíve escolher se o slider pai vai funcionar na vertical ou na horizontal (são necessárias mudanças de css para tudo ocorrer bem)
+			hubVerticalInner : false, // TRUE/FALSE: Em fase de testes, eixo dos slides filhos, define se a transição interna ocorrerá na vertical ou na horizontal
+			scroll : true, // TRUE/FALSE: Se true Habilita o scroll do mouse nos slides (jQuery mouse whell necessário)
+			keyboard : false, // TRUE/FALSE: Em fase de testes (nao recomendavel usar): habilita controles pelo teclado.
+			pagerOver : true, // TRUE/FALSE: Se true faz com que a paginação suma no Mouse Out
+			caption : true, // TRUE/FALSE: Se true faz com que caption seja mostrado (necessita HTML)
+			pin : true, // TRUE/FALSE: Se true podemos deixar o ultimo slide da ação aberto :)
+			defaultYond : null, // NÚMERO (int): Se for diferente de null o valor será o slide aberto inicialmente da esquerda para a direita começando com 1
+			defaultYondInner : 1, // NÚMERO (int): Igual ao item acima, no entanto este é valido apenas para os filhos.
+			spacing : 1, // NÚMERO (int): Espaço entre os slides pais (em px)
+			duration : 400, // NÚMERO (int): Tempo de transição para slides pais
+			durationInner : 800, // NÚMERO (int): Tempo de transição para slides filhos
+			pager : true, // TRUE/FALSE: Se true, mostra a paginação dos slides filhos (verificar HTML)
+			animation : true, // TRUE/FALSE: Se true, haverá efeitos de transição nos slides filhos
+			rand : '[all]', // TRUE/FALSE/array[]/string: true/false/[1,2,5...]/[all]/all: os slides filhos selecionados com a regra serão rotacionados automaticamente e aleatoriamente
+			OutRand :false, // TRUE/FALSE: Passa os sliders externos de tempo em tempo
+			randtime : 4000, //4seg    // NÚMERO (int): Se rand tiver uma régra diferente de false/null/undefined, este é o tempo de entre as randomizações
+			display : 1, // NÚMERO (int): Quantos slides (filhos) serão passados por ação (tem influência sobre a paginação)
+			controls : true, // TRUE/FALSE: Se true, será exibido controles de proximo e antreios nos sliders filhos
+			innerSlider : '.slider', // ELEM (string): Elemento/class dos sliders filhos (verifique HTML e siga o padrão)
+			outSlider : this, // ELEM (string): Elemento/class dos sliders pais (verifique HTML e siga o padrão)
+			iListMarker : 'dt', // ELEM (string): Elemento/TAG, os sliders internos são identificados por esta tag :)
+			callback : null, // resposta de ação para sliders pais
 			callbackInner : null 		    // resposta de ação para sliders filhos
 		};
 
@@ -63,6 +64,8 @@
 		// CoA = comprimento ou altura
 		var EoT = (o.hubVertical ? 'top' : 'left');
 		// EoT = esquerda ou topo
+		
+		var total = $(o.innerSlider).size();
 
 		// verifica se um indice pode ser encontrado nos valores informados em OBJ
 		function randIncs(arr, obj) {
@@ -89,29 +92,39 @@
 		$.fn.YOmove = function(iNum) {
 			$(o.innerSlider).eq(iNum).trigger(o.event).addClass('active');
 		};
-		
-		$.fn.YOnext = function(){
-			
-			var total= $(o.innerSlider).size();
-			var index= $('.active').index();
-						
-			if(index==(total-1))
+
+		$.fn.YOnext = function() {
+
+			var index = $('.active').index();
+
+			if(index == (total - 1))
 				$('.theyond').eq(0).trigger(o.event);
 			else
-			$('.theyond.active').next().trigger(o.event);
+				$('.theyond.active').next().trigger(o.event);
 		};
-		
-		$.fn.YOprev = function(){
-			var total= $(o.innerSlider).size();
-			var index= $('.active').index();
-				
-						
-			if(index==0)
-			$('.theyond').eq(total-1).trigger(o.event);
+
+		$.fn.YOprev = function() {
+			
+			var index = $('.active').index();
+
+			if(index == 0)
+				$('.theyond').eq(total - 1).trigger(o.event);
 			else
-			$('.theyond.active').prev().trigger(o.event);
+				$('.theyond.active').prev().trigger(o.event);
 		};
 		
+	  function randExternal(){
+	  			clearTimeout(tempo);
+				var index = $('.active').index();				
+				if(index == (total - 1))
+					$('.theyond').eq(0).trigger(o.event);
+				else
+					$('.theyond.active').next().trigger(o.event);
+			var tempo=	setTimeout(randExternal,o.randtime+(o.randtime/2));	
+					}
+	 if(o.OutRand)randExternal();
+	//	setTimeout('randExternal()', 1000);
+
 		$(o.outSlider).find('.pagenum').click(function() {
 
 			var ehActive = $(this).parents('theyond').parent().parent();
@@ -157,7 +170,7 @@
 			//calcular o valor de todos menos do primeiro e do ultimo
 			var preCalcEoTs = [];
 			//  pré calculo da esquerda
-			for( i = 0; i < beyond.size(); i++){
+			for( i = 0; i < beyond.size(); i++) {
 				preCalcEoTs[i] = [];
 				// nao precisamos calcular valores para o primeiro slider
 				for( j = 1; j < beyond.size() - 1; j++) {
@@ -311,7 +324,7 @@
 		});
 		//fim out slider
 
-	   $(o.innerSlider).each(function(){
+		$(o.innerSlider).each(function() {
 
 			// se tiver paginaçao, iniciamos suas opçoes
 			if($(this).find('.pager') && o.pagerOver)// fadeIn/fadeOut na paginaçao
@@ -340,9 +353,8 @@
 			} else// se o slide nao tiver slides internos entao continua fazendo scroll dos slides pais... (verificar laço de slides internos para configuração do wheel para eles)
 			{
 
-				if(o.scroll){
-						
-				
+				if(o.scroll) {
+
 					$(this).mousewheel(function(objEvent, intDelta) {
 						//vel = Math.abs(intDelta);
 						//alert($(this));
@@ -371,7 +383,6 @@
 				}
 			}
 		});
-		
 		function YondCaroucel(root, o) {
 			var oSelf = this;
 			var oViewport = $('.door', root).first();
@@ -437,7 +448,7 @@
 
 								} else {
 									//alert($(this).parent().parent().attr('class'));
-									
+
 									//$(this).parent().parent().next().trigger(o.event);
 								}
 
@@ -565,21 +576,24 @@
 				setTimer();
 			};
 
-			this.move = function(iDirection, bPublic)
-			{
-				if($(o.iListMarker, this).find('.Ycaption') && o.caption)
-				{
+			this.move = function(iDirection, bPublic) {
+				if($(o.iListMarker, this).find('.Ycaption') && o.caption) {
 					// /alert(1);
-				   // alert($(oSelf).find('.YcaptionGroup').find('.Ycaption'));
-					$('.Ycaption')
-						.stop()
-						.delay(o.durationInner + 120)
-						.css({'opacity': 0})						
-						.animate({marginTop:+10, opacity: 1},{ duration:200})
-						.animate({marginTop:0, opacity: 1},{ duration:200});
+					// alert($(oSelf).find('.YcaptionGroup').find('.Ycaption'));
+					$('.Ycaption').stop().delay(o.durationInner + 120).css({
+						'opacity' : 0
+					}).animate({
+						marginTop : +10,
+						opacity : 1
+					}, {
+						duration : 200
+					}).animate({
+						marginTop : 0,
+						opacity : 1
+					}, {
+						duration : 200
+					});
 				}
-				
-			
 				iCurrent = bPublic ? iDirection : iCurrent += iDirection;
 
 				if(iCurrent > -1 && iCurrent < iSteps) {
