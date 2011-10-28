@@ -34,7 +34,7 @@
 			easingInner : 'easeOutExpo', // jQuery Easing Plug-in: Define o easing para sliders internos
 			hubVertical : false, // TRUE/FALSE: Em fase de testes; É possíve escolher se o slider pai vai funcionar na vertical ou na horizontal (são necessárias mudanças de css para tudo ocorrer bem)
 			hubVerticalInner : false, // TRUE/FALSE: Em fase de testes, eixo dos slides filhos, define se a transição interna ocorrerá na vertical ou na horizontal
-			scroll : true, // TRUE/FALSE: Se true Habilita o scroll do mouse nos slides (jQuery mouse whell necessário)
+			scroll : false, // TRUE/FALSE: Se true Habilita o scroll do mouse nos slides (jQuery mouse whell necessário)
 			keyboard : false, // TRUE/FALSE: Em fase de testes (nao recomendavel usar): habilita controles pelo teclado.
 			pagerOver : true, // TRUE/FALSE: Se true faz com que a paginação suma no Mouse Out
 			caption : true, // TRUE/FALSE: Se true faz com que caption seja mostrado (necessita HTML)
@@ -47,7 +47,7 @@
 			pager : true, // TRUE/FALSE: Se true, mostra a paginação dos slides filhos (verificar HTML)
 			animation : true, // TRUE/FALSE: Se true, haverá efeitos de transição nos slides filhos
 			rand : '[all]', // TRUE/FALSE/array[]/string: true/false/[1,2,5...]/[all]/all: os slides filhos selecionados com a regra serão rotacionados automaticamente e aleatoriamente
-			OutRand :false, // TRUE/FALSE: Passa os sliders externos de tempo em tempo
+			OutRand : false, // TRUE/FALSE: Passa os sliders externos de tempo em tempo
 			randtime : 4000, //4seg    // NÚMERO (int): Se rand tiver uma régra diferente de false/null/undefined, este é o tempo de entre as randomizações
 			display : 1, // NÚMERO (int): Quantos slides (filhos) serão passados por ação (tem influência sobre a paginação)
 			controls : true, // TRUE/FALSE: Se true, será exibido controles de proximo e antreios nos sliders filhos
@@ -64,7 +64,7 @@
 		// CoA = comprimento ou altura
 		var EoT = (o.hubVertical ? 'top' : 'left');
 		// EoT = esquerda ou topo
-		
+
 		var total = $(o.innerSlider).size();
 
 		// verifica se um indice pode ser encontrado nos valores informados em OBJ
@@ -104,7 +104,7 @@
 		};
 
 		$.fn.YOprev = function() {
-			
+
 			var index = $('.active').index();
 
 			if(index == 0)
@@ -112,18 +112,18 @@
 			else
 				$('.theyond.active').prev().trigger(o.event);
 		};
-		
-	  function randExternal(){
-	  			clearTimeout(tempo);
-				var index = $('.active').index();				
-				if(index == (total - 1))
-					$('.theyond').eq(0).trigger(o.event);
-				else
-					$('.theyond.active').next().trigger(o.event);
-			var tempo=	setTimeout(randExternal,o.randtime+(o.randtime/2));	
-					}
-	 if(o.OutRand)randExternal();
-	//	setTimeout('randExternal()', 1000);
+		function randExternal() {
+			clearTimeout(tempo);
+			var index = $('.active').index();
+			if(index == (total - 1))
+				$('.theyond').eq(0).trigger(o.event);
+			else
+				$('.theyond.active').next().trigger(o.event);
+			var tempo = setTimeout(randExternal, o.randtime + (o.randtime / 2));
+		}
+
+		if(o.OutRand)
+			randExternal();
 
 		$(o.outSlider).find('.pagenum').click(function() {
 
