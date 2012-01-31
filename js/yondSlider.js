@@ -341,7 +341,7 @@
 						//vel = Math.abs(intDelta);
 						//alert($(this));
 						//$('#shadow').html(vel);
-						$(this).trigger(o.event,[true]);
+						$(this).trigger(o.event);
 						// se eu rolar o scroll em cima de um slide, este slide vai ser aberto e setado como ativo
 						if(!$(this).parent().hasClass('active')) {
 							if(!$(this).parent().hasClass('scrolled')) {
@@ -467,7 +467,7 @@
 									return false;
 								} else {
 									//alert($(this).parent().parent().attr('class'));
-									$(this).parents('.theyond').prev().trigger(o.event,[true]);
+									$(this).parents('.theyond').prev().trigger(o.event);
 								}
 
 							} else if(intDelta < 0) {
@@ -476,7 +476,7 @@
 									oSelf.move(1);
 									return false;
 								} else {
-									$(this).parents('.theyond').next().trigger(o.event,[true]);
+									$(this).parents('.theyond').next().trigger(o.event);
 								}
 
 							}
