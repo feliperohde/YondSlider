@@ -1,65 +1,47 @@
 /*
- Yond Slider para jQuery versão 1.0
+ Yond Slider para jQuery versÃ£o 1.0
  Copyright (c) 2011 Felipe Rohde
  http://felipeRohde.deviantart.com
+ http://grooveshark.com/feliperohde
  http://yond.com.br/
 
- up: da versão 0.6 até a 0.8 foi implementado suporte para jQuery Easing, então use a vontade :)
- up: 0.9 suporte ao jQuery Mouse Whell
- up: 1.0 todos os bugs (no scroll, botoes, etc) corrigidos
-
- previsão para 1.1: touch suport e aprimorar os controler do teclado.
-
- OBS: alguns Eases do jQuery Easing podem não funcionar adequadamente no evento MOUSEOVER pelo fato de que o posicionamento dos elementos é dinâmico, exemplo: easeInElastic e afins
-
- -------------------------------
- Licensed under the MIT license:
- http://www.opensource.org/licenses/mit-license.php
-
- Any and all use of this script must be accompanied by this copyright/license notice in its present form.
-
- -------------------------------
- Licenciado sob a licença MIT:
- http://www.opensource.org/licenses/mit-license.php
-
- Toda e qualquer utilização deste script deve ser acompanhada por este aviso de copyright / licença na sua forma actual.
- -------------------------------
+ OBS: alguns Eases do jQuery Easing podem nÃ£o funcionar adequadamente no evento MOUSEOVER pelo fato de que o posicionamento dos elementos Ã© dinÃ¢mico, exemplo: easeInElastic e afins
 
  */
 (function($) {
 	$.fn.YondSlider = function(options) {
 		var defaults = {
-			event : 'click', // jQuery EVENTS: Em que evento a ação será iniciada; (mouseover,click,doubleclick,mouseout...)
+			event : 'click', // jQuery EVENTS: Em que evento a aÃ§Ã£o serÃ¡ iniciada; (mouseover,click,doubleclick,mouseout...)
 			easing : 'easeInOutCirc', // jQuery Easing Plug-in: Define o efeito de easing para os sliders pais
 			easingInner : 'easeOutExpo', // jQuery Easing Plug-in: Define o easing para sliders internos
-			hubVertical : false, // TRUE/FALSE: Em fase de testes; É possíve escolher se o slider pai vai funcionar na vertical ou na horizontal (são necessárias mudanças de css para tudo ocorrer bem)
-			hubVerticalInner : false, // TRUE/FALSE: Em fase de testes, eixo dos slides filhos, define se a transição interna ocorrerá na vertical ou na horizontal
-			scroll : false, // TRUE/FALSE: Se true Habilita o scroll do mouse nos slides (jQuery mouse whell necessário)
+			hubVertical : false, // TRUE/FALSE: Em fase de testes; Ã‰ possÃ­ve escolher se o slider pai vai funcionar na vertical ou na horizontal (sÃ£o necessÃ¡rias mudanÃ§as de css para tudo ocorrer bem)
+			hubVerticalInner : false, // TRUE/FALSE: Em fase de testes, eixo dos slides filhos, define se a transiÃ§Ã£o interna ocorrerÃ¡ na vertical ou na horizontal
+			scroll : false, // TRUE/FALSE: Se true Habilita o scroll do mouse nos slides (jQuery mouse whell necessÃ¡rio)
 			keyboard : false, // TRUE/FALSE: Em fase de testes (nao recomendavel usar): habilita controles pelo teclado.
-			pagerOver : true, // TRUE/FALSE: Se true faz com que a paginação suma no Mouse Out
+			pagerOver : true, // TRUE/FALSE: Se true faz com que a paginaÃ§Ã£o suma no Mouse Out
 			caption : true, // TRUE/FALSE: Se true faz com que caption seja mostrado (necessita HTML)
-			pin : true, // TRUE/FALSE: Se true podemos deixar o ultimo slide da ação aberto :)
-			defaultYond : null, // NÚMERO (int): Se for diferente de null o valor será o slide aberto inicialmente da esquerda para a direita começando com 1
-			defaultYondInner : 1, // NÚMERO (int): Igual ao item acima, no entanto este é valido apenas para os filhos.
-			spacing : 1, // NÚMERO (int): Espaço entre os slides pais (em px)
-			duration : 400, // NÚMERO (int): Tempo de transição para slides pais
-			durationInner : 800, // NÚMERO (int): Tempo de transição para slides filhos
-			pager : true, // TRUE/FALSE: Se true, mostra a paginação dos slides filhos (verificar HTML)
-			animation : true, // TRUE/FALSE: Se true, haverá efeitos de transição nos slides filhos
-			rand : '[all]', // TRUE/FALSE/array[]/string: true/false/[1,2,5...]/[all]/all: os slides filhos selecionados com a regra serão rotacionados automaticamente e aleatoriamente
+			pin : true, // TRUE/FALSE: Se true podemos deixar o ultimo slide da aÃ§Ã£o aberto :)
+			defaultYond : null, // NÃšMERO (int): Se for diferente de null o valor serÃ¡ o slide aberto inicialmente da esquerda para a direita comeÃ§ando com 1
+			defaultYondInner : 1, // NÃšMERO (int): Igual ao item acima, no entanto este Ã© valido apenas para os filhos.
+			spacing : 1, // NÃšMERO (int): EspaÃ§o entre os slides pais (em px)
+			duration : 400, // NÃšMERO (int): Tempo de transiÃ§Ã£o para slides pais
+			durationInner : 800, // NÃšMERO (int): Tempo de transiÃ§Ã£o para slides filhos
+			pager : true, // TRUE/FALSE: Se true, mostra a paginaÃ§Ã£o dos slides filhos (verificar HTML)
+			animation : true, // TRUE/FALSE: Se true, haverÃ¡ efeitos de transiÃ§Ã£o nos slides filhos
+			rand : '[all]', // TRUE/FALSE/array[]/string: true/false/[1,2,5...]/[all]/all: os slides filhos selecionados com a regra serÃ£o rotacionados automaticamente e aleatoriamente
 			OutRand : false, // TRUE/FALSE: Passa os sliders externos de tempo em tempo
-			randtime : 4000, //4seg    // NÚMERO (int): Se rand tiver uma régra diferente de false/null/undefined, este é o tempo de entre as randomizações
-			display : 1, // NÚMERO (int): Quantos slides (filhos) serão passados por ação (tem influência sobre a paginação)
-			controls : true, // TRUE/FALSE: Se true, será exibido controles de proximo e antreios nos sliders filhos
-			innerSlider : '.slider', // ELEM (string): Elemento/class dos sliders filhos (verifique HTML e siga o padrão)
-			outSlider : this, // ELEM (string): Elemento/class dos sliders pais (verifique HTML e siga o padrão)
-			iListMarker : 'dt', // ELEM (string): Elemento/TAG, os sliders internos são identificados por esta tag :)
-			callback : null, // resposta de ação para sliders pais
-			callbackInner : null 		    // resposta de ação para sliders filhos
+			randtime : 4000, //4seg    // NÃšMERO (int): Se rand tiver uma rÃ©gra diferente de false/null/undefined, este Ã© o tempo de entre as randomizaÃ§Ãµes
+			display : 1, // NÃšMERO (int): Quantos slides (filhos) serÃ£o passados por aÃ§Ã£o (tem influÃªncia sobre a paginaÃ§Ã£o)
+			controls : true, // TRUE/FALSE: Se true, serÃ¡ exibido controles de proximo e antreios nos sliders filhos
+			innerSlider : '.slider', // ELEM (string): Elemento/class dos sliders filhos (verifique HTML e siga o padrÃ£o)
+			outSlider : this, // ELEM (string): Elemento/class dos sliders pais (verifique HTML e siga o padrÃ£o)
+			iListMarker : 'dt', // ELEM (string): Elemento/TAG, os sliders internos sÃ£o identificados por esta tag :)
+			callback : null, // resposta de aÃ§Ã£o para sliders pais
+			callbackInner : null 		    // resposta de aÃ§Ã£o para sliders filhos
 		};
 
 		var o = $.extend(defaults, options);
-		// o = opções
+		// o = opÃ§Ãµes
 		var CoA = (o.hubVertical ? 'height' : 'width');
 		// CoA = comprimento ou altura
 		var EoT = (o.hubVertical ? 'top' : 'left');
@@ -98,9 +80,9 @@
 			var index = $('.active').index();
 
 			if(index == (total - 1))
-				$('.theyond').eq(0).trigger(o.event);
+				$('.theyond').eq(0).trigger(o.event,[true]);
 			else
-				$('.theyond.active').next().trigger(o.event);
+				$('.theyond.active').next().trigger(o.event,[true]);
 		};
 
 		$.fn.YOprev = function() {
@@ -108,17 +90,17 @@
 			var index = $('.active').index();
 
 			if(index == 0)
-				$('.theyond').eq(total - 1).trigger(o.event);
+				$('.theyond').eq(total - 1).trigger(o.event,[true]);
 			else
-				$('.theyond.active').prev().trigger(o.event);
+				$('.theyond.active').prev().trigger(o.event,[true]);
 		};
 		function randExternal() {
 			clearTimeout(tempo);
 			var index = $('.active').index();
 			if(index == (total - 1))
-				$('.theyond').eq(0).trigger(o.event);
+				$('.theyond').eq(0).trigger(o.event,[true]);
 			else
-				$('.theyond.active').next().trigger(o.event);
+				$('.theyond.active').next().trigger(o.event,[true]);
 			var tempo = setTimeout(randExternal, o.randtime + (o.randtime / 2));
 		}
 
@@ -132,13 +114,13 @@
 
 			if(!$(ehActive).hasClass('active')) {
 				//alert($(ehActive).attr('class'));
-				$(ehActive).trigger(o.event);
+				$(ehActive).trigger(o.event,[true]);
 			}
 			return false;
 		});
 
 		$('.buttons', o.outSlider).click(function() {
-			$(this).parent().trigger(o.event);
+			$(this).parent().trigger(o.event,[true]);
 		});
 
 		o.outSlider.each(function()// verificar compatibilidade jquery, usar $(o.outSlider).each
@@ -169,7 +151,7 @@
 
 			//calcular o valor de todos menos do primeiro e do ultimo
 			var preCalcEoTs = [];
-			//  pré calculo da esquerda
+			//  prÃ© calculo da esquerda
 			for( i = 0; i < beyond.size(); i++) {
 				preCalcEoTs[i] = [];
 				// nao precisamos calcular valores para o primeiro slider
@@ -214,7 +196,7 @@
 					}
 				}
 
-				// A  T  E  N  Ç  Ã  O  : o.defaultYond -1 é para que na contagem se inicie a partir do 1 e não de zero
+				// A  T  E  N  Ã‡  Ãƒ  O  : o.defaultYond -1 Ã© para que na contagem se inicie a partir do 1 e nÃ£o de zero
 
 				if(o.defaultYond != null) {
 					//antigo modo de setar a pagina inicial, feio
@@ -235,9 +217,9 @@
 
 				theBeyond.bind(o.event, function(event) {
 
-					//event.preventDefault(); // ser der preventDefault os links não funcionam
+					//event.preventDefault(); // ser der preventDefault os links nÃ£o funcionam
 
-					// CALCULA VALORES DO SLIDER ANTERIOR (ALTURA, LARGURA, POSIÇÃO LEFT E TOP)
+					// CALCULA VALORES DO SLIDER ANTERIOR (ALTURA, LARGURA, POSIÃ‡ÃƒO LEFT E TOP)
 					var prevCoAs = [];
 					// prevCoAs = PREVIOUS-COMPRIMENTO-OU-ALTURA
 					var prevEoTs = [];
@@ -266,7 +248,7 @@
 					theBeyond.addClass('active').animate(aniObj, {
 
 						step : function(now) {
-							//calculando o resultado da animação em porcentagem
+							//calculando o resultado da animaÃ§Ã£o em porcentagem
 							var percentage = maxDif != 0 ? now / maxDif - prevCoAsMaxDifRatio : 1;
 							// ajustando os outros elementos com esta porcentagem
 							beyond.each(function(j) {
@@ -285,7 +267,7 @@
 								o.callback.call(this);
 						}
 					});
-					//return false; // se der return false, os links dentro do slider nao funcionam, isso é como um preventDefault do jquery
+					//return false; // se der return false, os links dentro do slider nao funcionam, isso Ã© como um preventDefault do jquery
 				});
 			});
 			if(o.pin == false) {
@@ -316,7 +298,7 @@
 						if(typeof o.callback=='function')
 						o.callback.call(this);
 						}*/
-						// esse é o callBack executado quando o slider PAI volta ao seu estado normal
+						// esse Ã© o callBack executado quando o slider PAI volta ao seu estado normal
 					});
 				});
 			}
@@ -326,8 +308,8 @@
 
 		$(o.innerSlider).each(function() {
 
-			// se tiver paginaçao, iniciamos suas opçoes
-			if($(this).find('.pager') && o.pagerOver)// fadeIn/fadeOut na paginaçao
+			// se tiver paginaÃ§ao, iniciamos suas opÃ§oes
+			if($(this).find('.pager') && o.pagerOver)// fadeIn/fadeOut na paginaÃ§ao
 			{
 				$(this).hover(function() {
 					//alert(1);
@@ -348,9 +330,9 @@
 			if($(this).find(o.iListMarker).size() > 1) {
 				//alert(1);
 				$(this).data('ynd', new YondCaroucel($(this), o));
-				//ativa a função e da inicio ao laço de sliders internos
+				//ativa a funÃ§Ã£o e da inicio ao laÃ§o de sliders internos
 
-			} else// se o slide nao tiver slides internos entao continua fazendo scroll dos slides pais... (verificar laço de slides internos para configuração do wheel para eles)
+			} else// se o slide nao tiver slides internos entao continua fazendo scroll dos slides pais... (verificar laÃ§o de slides internos para configuraÃ§Ã£o do wheel para eles)
 			{
 
 				if(o.scroll) {
@@ -359,7 +341,7 @@
 						//vel = Math.abs(intDelta);
 						//alert($(this));
 						//$('#shadow').html(vel);
-						$(this).trigger(o.event);
+						$(this).trigger(o.event,[true]);
 						// se eu rolar o scroll em cima de um slide, este slide vai ser aberto e setado como ativo
 						if(!$(this).parent().hasClass('active')) {
 							if(!$(this).parent().hasClass('scrolled')) {
@@ -368,12 +350,12 @@
 
 						} else {
 							if(intDelta > 0) {
-								$(this).parent().prev().trigger(o.event);
+								$(this).parent().prev().trigger(o.event,[true]);
 								//$(this).addClass('inactive');
 								//$(this).parent().addClass('scrolled');
 							}
 							if(intDelta < 0) {
-								$(this).parent().next().trigger(o.event);
+								$(this).parent().next().trigger(o.event,[true]);
 								//$(this).parent().addClass('scrolled');
 							}
 
@@ -418,7 +400,7 @@
 					//JQUERY MOUSE WHELL
 
 					if(o.defaultYondInner > 1) {
-						// se existir um slider filho padrão para ser aberto, ajusta as posições para o scroll
+						// se existir um slider filho padrÃ£o para ser aberto, ajusta as posiÃ§Ãµes para o scroll
 						intOverallDelta = intOverallDelta + 1 - (o.defaultYondInner);
 
 					}
@@ -475,7 +457,7 @@
 						$(oViewport).mousewheel(function(objEvent, intDelta) {
 
 							$(this).trigger(o.event);
-							// aplica o evento no elemento também no onScroll
+							// aplica o evento no elemento tambÃ©m no onScroll
 							//$('.pagenum').trigger(o.event);
 							if(intDelta > 0) {
 								if(intOverallDelta >= 0 && intOverallDelta < (countElens)) {
@@ -485,7 +467,7 @@
 									return false;
 								} else {
 									//alert($(this).parent().parent().attr('class'));
-									$(this).parents('.theyond').prev().trigger(o.event);
+									$(this).parents('.theyond').prev().trigger(o.event,[true]);
 								}
 
 							} else if(intDelta < 0) {
@@ -494,7 +476,7 @@
 									oSelf.move(1);
 									return false;
 								} else {
-									$(this).parents('.theyond').next().trigger(o.event);
+									$(this).parents('.theyond').next().trigger(o.event,[true]);
 								}
 
 							}
@@ -619,7 +601,7 @@
 				//return false;
 			};
 			return ini();
-			// faz as mágicas
+			// faz as mÃ¡gicas
 
 		};
 
