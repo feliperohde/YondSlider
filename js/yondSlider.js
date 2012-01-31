@@ -350,12 +350,12 @@
 
 						} else {
 							if(intDelta > 0) {
-								$(this).parent().prev().trigger(o.event,[true]);
+								$(this).parent().prev().trigger(o.event);
 								//$(this).addClass('inactive');
 								//$(this).parent().addClass('scrolled');
 							}
 							if(intDelta < 0) {
-								$(this).parent().next().trigger(o.event,[true]);
+								$(this).parent().next().trigger(o.event);
 								//$(this).parent().addClass('scrolled');
 							}
 
